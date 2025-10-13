@@ -80,12 +80,12 @@ export class AppButton extends DDDSuper(LitElement) {
       
       /* Primary variant */
       .primary {
-        background-color: var(--ddd-theme-primary);
+        background-color: var(--ddd-theme-default-athertonViolet);
         color: var(--ddd-theme-default-white);
       }
       
-      .primary:hover:not(:disabled) {
-        background-color: var(--ddd-theme-primary-dark);
+      .primary:hover:focus:not(:disabled) {
+        background-color: var(--ddd-theme-default-alertImmediate);
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }

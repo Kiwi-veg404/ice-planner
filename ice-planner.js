@@ -73,6 +73,38 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
     };
   }
 
+  updated(changedProperties) {
+    if (super.updated) {
+      super.updated(changedProperties);
+    }
+    if (changedProperties.has('numberOfPlayers') || changedProperties.has('iceCostPerHour') || changedProperties.has('numberOfSlots') || changedProperties.has('overheadPercentage') || changedProperties.has('coachesCost') || changedProperties.has('jerseysCost')) {
+      if (this.iceCostPerHour <= 0) {
+        this.iceCostPerHour = 0;
+        this.calculateCosts();
+      }
+      if (this.overheadPercentage <= 0) {
+        this.overheadPercentage = 0;
+        this.calculateCosts();
+      }
+      if (this.coachesCost <= 0) {
+        this.coachesCost = 0;
+        this.calculateCosts();
+      }
+      if (this.jerseysCost <= 0) {
+        this.jerseysCost = 0;
+        this.calculateCosts();
+      }
+      if (this.numberOfPlayers <= 1) {
+        this.numberOfPlayers = 1;
+        this.calculateCosts();
+      }
+      if (this.numberOfSlots <= 1) {
+        this.numberOfSlots = 1;
+        this.calculateCosts();
+      }
+    }
+  }
+
   // methods to modify count
   reset() {
     this.iceCostPerHour = 300;
@@ -82,6 +114,26 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
     this.jerseysCost = 88;
     this.numberOfPlayers = 1;
     this.calculateCosts();
+  }
+  addOneToSlots() {
+    this.numberOfSlots++;
+    this.calculateCosts();
+  }
+  minusOneFromSlots() {
+    if (this.numberOfSlots > 1) {
+      this.numberOfSlots--;
+      this.calculateCosts();
+    }
+  }
+  addOneToPlayers() {
+    this.numberOfPlayers++;
+    this.calculateCosts();
+  }
+  minusOneFromPlayers() {
+    if (this.numberOfPlayers > 1) {
+      this.numberOfPlayers--;
+      this.calculateCosts();
+    }
   }
 
   // Calculate total costs
@@ -368,8 +420,6 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               <number-input
                 label="Ice Cost (per Hour)"
                 .value="${this.iceCostPerHour}"
-                .min="50"
-                .max="1000"
                 prefix="$"
                 data-property="iceCostPerHour"
                 @value-changed="${this._handleValueChange}"
@@ -378,19 +428,19 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               <number-input
                 label="Number of Ice Slots (Season)"
                 .value="${this.numberOfSlots}"
-                .min="1"
-                .max="200"
                 suffix="hours"
                 data-property="numberOfSlots"
                 @value-changed="${this._handleValueChange}"
               ></number-input>
-          
+              <div>
+                <app-button @click="${this.minusOneFromSlots}">-1</app-button>
+                <app-button @click="${this.addOneToSlots}">+1</app-button>
+                (minimum is 1)
+              </div>
+
               <number-input
                 label="Coaches Cost (Total)"
                 .value="${this.coachesCost}"
-                .min="0"
-                .max="20000"
-                .step="100"
                 prefix="$"
                 data-property="coachesCost"
                 @value-changed="${this._handleValueChange}"
@@ -399,8 +449,6 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               <number-input
                 label="Jersey Cost (per Player)"
                 .value="${this.jerseysCost}"
-                .min="10"
-                .max="500"
                 prefix="$"
                 data-property="jerseysCost"
                 @value-changed="${this._handleValueChange}"
@@ -409,18 +457,18 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               <number-input
                 label="Number of Players"
                 .value="${this.numberOfPlayers}"
-                .min="1"
-                .max="50"
                 data-property="numberOfPlayers"
                 @value-changed="${this._handleValueChange}"
               ></number-input>
+              <div>
+                <app-button @click="${this.minusOneFromPlayers}">-1</app-button>
+                <app-button @click="${this.addOneToPlayers}">+1</app-button>
+                (minimum is 1)
+              </div>
 
               <number-input
                 label="Overhead Percentage"
                 .value="${this.overheadPercentage}"
-                .min="0"
-                .max="25"
-                .step="0.5"
                 suffix="%"
                 data-property="overheadPercentage"
                 @value-changed="${this._handleValueChange}"
