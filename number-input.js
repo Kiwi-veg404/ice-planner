@@ -135,9 +135,9 @@ export class NumberInput extends DDDSuper(LitElement) {
           <input 
             id="input"
             type="number" 
-            .value="${this.value}" 
-            .min="${this.min}"
-            .max="${this.max}"
+            .value="${this.value.toString()}" 
+            .min="${this.min.toString()}"
+            .max="${this.max.toString()}"
             .step="${this.step}"
             @input="${this._handleInput}"
           />

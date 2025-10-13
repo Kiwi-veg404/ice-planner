@@ -73,6 +73,17 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
     };
   }
 
+  // methods to modify count
+  reset() {
+    this.iceCostPerHour = 300;
+    this.numberOfSlots = 50;
+    this.overheadPercentage = 2;
+    this.coachesCost = 3000;
+    this.jerseysCost = 88;
+    this.numberOfPlayers = 1;
+    this.calculateCosts();
+  }
+
   // Calculate total costs
   calculateCosts() {
     const iceTotal = this.iceCostPerHour * this.numberOfSlots;
@@ -355,7 +366,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
             
             <div class="input-group">
               <number-input
-                label="Ice Cost per Hour"
+                label="Ice Cost (per Hour)"
                 .value="${this.iceCostPerHour}"
                 .min="50"
                 .max="1000"
@@ -373,18 +384,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
                 data-property="numberOfSlots"
                 @value-changed="${this._handleValueChange}"
               ></number-input>
-              
-              <number-input
-                label="Overhead Percentage"
-                .value="${this.overheadPercentage}"
-                .min="0"
-                .max="25"
-                .step="0.5"
-                suffix="%"
-                data-property="overheadPercentage"
-                @value-changed="${this._handleValueChange}"
-              ></number-input>
-              
+          
               <number-input
                 label="Coaches Cost (Total)"
                 .value="${this.coachesCost}"
@@ -397,7 +397,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               ></number-input>
               
               <number-input
-                label="Jersey Cost per Player"
+                label="Jersey Cost (per Player)"
                 .value="${this.jerseysCost}"
                 .min="10"
                 .max="500"
@@ -414,7 +414,19 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
                 data-property="numberOfPlayers"
                 @value-changed="${this._handleValueChange}"
               ></number-input>
+
+              <number-input
+                label="Overhead Percentage"
+                .value="${this.overheadPercentage}"
+                .min="0"
+                .max="25"
+                .step="0.5"
+                suffix="%"
+                data-property="overheadPercentage"
+                @value-changed="${this._handleValueChange}"
+              ></number-input>
             </div>
+            <app-button @click="${this.reset}">Reset</app-button>
           </div>
           
           <div class="results-section">
@@ -425,12 +437,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
                 <span class="cost-label">Ice Time</span>
                 <span class="cost-value">$${(this.iceCostPerHour * this.numberOfSlots).toLocaleString()}</span>
               </div>
-              
-              <div class="cost-item">
-                <span class="cost-label">Overhead (${this.overheadPercentage}%)</span>
-                <span class="cost-value">$${((this.iceCostPerHour * this.numberOfSlots) * (this.overheadPercentage / 100)).toLocaleString()}</span>
-              </div>
-              
+
               <div class="cost-item">
                 <span class="cost-label">Coaches</span>
                 <span class="cost-value">$${this.coachesCost.toLocaleString()}</span>
@@ -440,6 +447,11 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
                 <span class="cost-label">Jerseys (${this.numberOfPlayers} × $${this.jerseysCost})</span>
                 <span class="cost-value">$${(this.jerseysCost * this.numberOfPlayers).toLocaleString()}</span>
               </div>
+
+              <div class="cost-item">
+                <span class="cost-label">Overhead (${this.overheadPercentage}%)</span>
+                <span class="cost-value">$${((this.iceCostPerHour * this.numberOfSlots + this.coachesCost + this.jerseysCost * this.numberOfPlayers) * (this.overheadPercentage / 100)).toLocaleString()}</span>
+              </div>
               
               <div class="cost-item total">
                 <span class="cost-label">Total Season Cost</span>
@@ -447,7 +459,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               </div>
               
               <div class="cost-item total">
-                <span class="cost-label">Cost per Player</span>
+                <span class="cost-label">Cost per Player (Total/number of players)</span>
                 <span class="cost-value">$${Math.round(this.costPerPlayer).toLocaleString()}</span>
               </div>
             </div>
