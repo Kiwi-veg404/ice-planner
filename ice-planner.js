@@ -298,6 +298,10 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
       .cost-item.total .cost-value {
         color: var(--ddd-theme-default-white);
       }
+
+      #smaller-text {
+        font-size: var(--ddd-font-size-xs);
+      }
       
       /* Mobile responsive */
       @media (max-width: 768px) {
@@ -491,7 +495,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
               </div>
               
               <div class="cost-item total">
-                <span class="cost-label">Cost per Player (Total/number of players)</span>
+                <span class="cost-label" id="smaller-text">Cost per Player (Total/number of players)</span>
                 <span class="cost-value">$${Math.round(this.costPerPlayer).toLocaleString()}</span>
               </div>
             </div>
