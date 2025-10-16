@@ -78,30 +78,14 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
       super.updated(changedProperties);
     }
     if (changedProperties.has('numberOfPlayers') || changedProperties.has('iceCostPerHour') || changedProperties.has('numberOfSlots') || changedProperties.has('overheadPercentage') || changedProperties.has('coachesCost') || changedProperties.has('jerseysCost')) {
-      if (this.iceCostPerHour <= 0) {
-        this.iceCostPerHour = 0;
-        this.calculateCosts();
-      }
-      if (this.overheadPercentage <= 0) {
-        this.overheadPercentage = 0;
-        this.calculateCosts();
-      }
-      if (this.coachesCost <= 0) {
-        this.coachesCost = 0;
-        this.calculateCosts();
-      }
-      if (this.jerseysCost <= 0) {
-        this.jerseysCost = 0;
-        this.calculateCosts();
-      }
       if (this.numberOfPlayers <= 1) {
         this.numberOfPlayers = 1;
-        this.calculateCosts();
       }
       if (this.numberOfSlots <= 1) {
         this.numberOfSlots = 1;
-        this.calculateCosts();
       }
+      
+      this.calculateCosts()
     }
   }
 
