@@ -274,10 +274,10 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
       
       .cost-item.total {
         background: linear-gradient(135deg, var(--ddd-theme-primary), var(--ddd-theme-primary-dark));
-        color: var(--ddd-theme-default-white);
+        background-color: var(--ddd-theme-default-accent);
         font-size: var(--ddd-font-size-m);
         font-weight: bold;
-        border-left-color: var(--ddd-theme-accent);
+        border-left-color: var(--ddd-theme-primary-dark);
       }
       
       .cost-label {
@@ -286,7 +286,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
       }
       
       .cost-item.total .cost-label {
-        color: var(--ddd-theme-default-white);
+        color: var(--ddd-theme-primary);
       }
       
       .cost-value {
@@ -296,7 +296,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
       }
       
       .cost-item.total .cost-value {
-        color: var(--ddd-theme-default-white);
+        color: var(--ddd-theme-primary);
       }
 
       #smaller-text {
@@ -343,7 +343,7 @@ export class IcePlanner extends DDDSuper(I18NMixin(LitElement)) {
         .cost-item {
           background-color: var(--ddd-theme-default-coalyGray);
         }
-        
+
         .cost-label {
           color: var(--ddd-theme-default-white);
         }
